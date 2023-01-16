@@ -1,0 +1,63 @@
+{% extends 'info/base.html' %}
+{% block content %}
+<h2>Name:- {{teacher_name}}</h2>
+<form  method="post">
+  {% csrf_token %}
+  <label class="form-check-label" for="flexRadioDefault1">
+    Select Exam Name
+  </label>
+  <select name="ename" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+    
+    {% for exam_name in exam_list %}
+    
+    <option >{{ exam_name.exam_name }}</option>
+    {% endfor %}
+  </select>
+    
+<select name="cn" class="form-select" aria-label="Default select example">
+    <option>Select courses</option>
+    {% for cname in course_name %}
+    <option>{{cname}}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-outline-dark btn-sm" type="submit" value="submit"> Search</button>
+  <a class="btn btn-outline-dark btn-sm" href="{% url 'add_question' %}" role="button">ADD</a>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="et" value="Each" id="flexRadioDefault1">
+    <label class="form-check-label" for="flexRadioDefault1">
+      Each Quetion Mark
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="et" value="Total" id="flexRadioDefault2">
+    <label class="form-check-label" for="flexRadioDefault2">
+      Total Mark
+    </label>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Set Each Exam Mark or Total Mark</label>
+    <input type="number" name="marks" class="form-control" id="exampleInputPassword1">
+  </div>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Select</th>
+        <th scope="col">Question</th>
+        <!-- <th scope="col">Option</th> -->
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for qd  in que_dis  %}
+      <tr>
+        <th><input class="form-check-input" type="checkbox"  id="flexCheckDefault" value="{{qd}}" name="check"></th>
+        {% ifequal cd True %}<th><input type="number" name="eachnum" maxlength="100" minlength="1" id="inputPassword6" class="form-control" style="width: 70px;" aria-describedby="passwordHelpInline"></th>{% endifequal %}
+        <td>{{qd}}</td>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+  <button class="btn btn-outline-dark btn-sm" type="submit" value="submit"> Submit</button>
+</form>
+{% endblock %}

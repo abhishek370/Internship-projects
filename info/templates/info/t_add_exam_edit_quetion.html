@@ -1,0 +1,26 @@
+{% extends 'info/base.html' %}
+{% load filter_custom %}
+{% block content %}
+<h1 style="text-align: center;">Edit Quetions</h1>
+<form  method="post">
+{% csrf_token %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Checks</th>
+        <th scope="col">Quetions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for a in que_data %}
+      <tr>
+        <td><input class="form-check-input" type="checkbox" {% if a.question_description in edd %} checked {% endif %}  id="flexCheckDefault" value="{{a.question_description}}" name="check"></td>
+        <th><input type="number" name="eachnum" maxlength="100" minlength="1" id="inputPassword6" class="form-control" style="width: 70px;" aria-describedby="passwordHelpInline" {% if a.question_description in edd %} value="{{edm|index:forloop.counter0}}" {% endif %}></th>
+        <td>{{a.question_description}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <button class="btn btn-primary " type="submit" value="submit">Edit</button>
+</form>  
+{% endblock %}

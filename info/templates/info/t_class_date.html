@@ -1,0 +1,100 @@
+{% extends 'info/base.html' %}
+
+{% block content %}
+<form  method="post">
+{% csrf_token %}
+
+<div class="input-group mb-3">
+  <input type="date" class="form-control" name="search" placeholder="Enter Date" aria-label="Date" aria-describedby="button-addon2">
+  <button class="btn btn-primary " type="submit" value="submit"> Search</button>
+</div>
+
+<div style="display: flex;">
+  <div class="form-check" >
+    <input class="form-check-input" type="checkbox" name="m" value="1" id="flexCheckDefault" {% if x  %} checked {% endif %}>
+    <label class="form-check-label" for="flexCheckDefault">
+      Marked
+    </label>
+  </div>
+  <div class="form-check" style="margin-left: 10px;">
+    <input class="form-check-input" type="checkbox" name="m" value="0" id="flexCheckChecked" {% if y %} checked {% endif %}>
+    <label class="form-check-label" for="flexCheckChecked">
+      Not Marked
+    </label>
+  </div>
+  <div class="form-check" style="margin-left: 10px;">
+    <input class="form-check-input" type="checkbox" name="m" value="2" id="flexCheckChecked" {% if z %} checked {% endif %}>
+    <label class="form-check-label" for="flexCheckChecked">
+      Cancelled
+    </label>
+  </div>
+  <button class="btn btn-primary " style="margin-left: 10px; margin-bottom: 10px;" type="submit" value="submit"> FILTER</button>
+</div>
+</form>
+
+    <div class="card mb-3">
+        <div class="card-header">
+              <i class="fas fa-table"></i>
+            <b>Attendance</b></div>
+
+         
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for a in att_list %}
+                    <tr>
+                        <td>{{ a.date }}</td>
+                        {% if a.status == 0 %}
+                            <td class="p-3 mb-2 bg-danger text-white">Not Marked</td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 't_attendance' a.id %}" role="button">Enter Attendance</a>
+                                <a class="btn btn-warning" href="{% url 'cancel_class' a.id %}">Cancel Class</a>
+                            </td>
+
+                        {% elif a.status == 1 %}
+                            <td class="p-3 mb-2 bg-success text-white">Marked</td>
+                            <td><a class="btn btn-secondary" href="{% url 'edit_att' a.id %}" role="button">Edit Attendance</a> </td>
+
+                        {% else %}
+                            <td class="p-3 mb-2 bg-warning text-white">Cancelled</td>
+                            <td><a class="btn btn-primary" href="{% url 't_attendance' a.id %}" role="button">Enter Attendance</a></td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                            <p>student has no courses</p>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+                {% if att_list.has_other_pages %}
+										
+                <ul class="pagination global pagination-radius float-right mb-xl-0 ml-3">
+                  {% if att_list.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ att_list.previous_page_number }}"><i class="las la-angle-double-left"></i></a></li>
+                  {% endif %}
+                  {% for i in att_list.paginator.page_range %}
+                  {% if att_list.number == i %}	
+                    <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>	
+                  {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                  {% endif %}	
+                  {% endfor %}
+                  {% if att_list.has_next %}				
+                  <li class="page-item"><a class="page-link" href="?page={{ att_list.next_page_number }}"><i class="las la-angle-double-right"></i></a></li>
+                  {% endif %}
+                </ul>
+                {% endif %}
+              </div>
+              <p>Pagination</p>
+        </div>
+    </div>
+{% endblock %}

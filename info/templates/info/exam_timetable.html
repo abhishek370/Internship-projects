@@ -1,0 +1,39 @@
+{% extends 'info/base.html' %}
+{% block content %}
+<h1 style="text-align: center;">Exam TimeTable</h1>
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Exam Date</th>
+        <th scope="col">Exam Name</th>
+        <th scope="col">Course</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Teacher</th>
+        <th scope="col">Exam Start Time</th>
+        <th scope="col">Exam End Time</th>
+        <th scope="col">Status</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+    {% for e in exam_list %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{e.exam_date}}</td>
+        <td>{{e.exam_name}}</td>
+        <td>{{e.course}}</td>
+        <td>{{e.class_id}}</td>
+        <td>{{e.teacher}}</td>
+        <td>{{e.exam_time_start|date:'H:i A'}}</td>
+        <td>{{e.exam_time_end|date:'H:i A'}}</td>
+        {% if e.exam_date >= today %}
+        <td>Pending</td>
+        {% else %}
+        <td>Done</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

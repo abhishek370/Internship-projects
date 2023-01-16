@@ -1,0 +1,17 @@
+{% extends 'info/base.html' %}
+{% block content %}
+
+<div class="container p-1 my-3 bg-dark text-white">
+    <h1>Exam Detailes</h1>
+    <h4>Exam Name:- {{exam_name1}}</h4>
+    <h4>Subject:- {{stud_subject}}</h4>
+    <h4>Course:- {{stud_course}}</h4>
+    <h4>Exam Date:- {{exam_date1}}</h4>
+    <h4>Exam Time Start:- {{exam_time_start1|date:'H:i A'}}</h4>
+    <h4>Exam Time End:- {{exam_time_end1|date:'H:i A'}}</h4>
+    <h4>Teacher Name:- {{teacher_name}}</h4>
+    <h4>Exam Duretion:- {{duration}} Hours</h4>
+    
+</div>
+
+{% endblock %}

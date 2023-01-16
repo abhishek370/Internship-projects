@@ -1,0 +1,64 @@
+{% extends 'info/base.html' %}
+{% block content %}
+<h2 style="text-align: center;">Add Quetions</h2>
+<form  method="post">
+{% csrf_token %}    
+<div class="mb-3">
+<label for="exampleFormControlTextarea1" class="form-label">Select Teacher:- </label>
+<select name="teacher_name" class="form-select" aria-label="Default select example" required>
+    <option selected>Select Teacher</option>
+    {% for name in teacher_name %}
+    <option>{{name}}</option>
+    {% endfor %}
+  </select>
+</div>
+<div class="mb-3">
+<label for="exampleFormControlTextarea1" class="form-label">Select Courses:- </label>  
+<select name="course" class="form-select" aria-label="Default select example" required>
+    <option selected>Select Courses</option>
+    {% for cname in course_name %}
+    <option>{{cname}}</option>
+    {% endfor %}
+</select>
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Question Description</label>
+    <textarea name="que_dis" class="form-control" id="exampleFormControlTextarea1" rows="3" required></textarea>
+  </div>
+<div class="mb-3 row">
+<label for="inputPassword" class="col-sm-2 col-form-label">Option 1</label>
+<div class="col-sm-10">
+    <input name="option_1" type="text" class="form-control" id="inputPassword" required>
+</div>
+</div>
+<div class="mb-3 row">
+<label for="inputPassword" class="col-sm-2 col-form-label">Option 2</label>
+<div class="col-sm-10">
+    <input name="option_2" type="text" class="form-control" id="inputPassword" required>
+</div>
+</div>
+<div class="mb-3 row">
+<label for="inputPassword" class="col-sm-2 col-form-label">Option 3</label>
+<div class="col-sm-10">
+    <input name="option_3" type="text" class="form-control" id="inputPassword" required>
+</div>
+</div>
+<div class="mb-3 row">
+<label for="inputPassword" class="col-sm-2 col-form-label">Option 4</label>
+<div class="col-sm-10">
+    <input name="option_4" type="text" class="form-control" id="inputPassword" required>
+</div>
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Correct Answer:- </label>  
+    <select name="cur_ans" class="form-select" aria-label="Default select example" required>
+        <option selected>Select Answer</option>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+    </select>
+</div>
+<button class="btn btn-outline-dark btn-sm" type="submit" value="submit"> ADD</button>
+</form>
+{% endblock %}

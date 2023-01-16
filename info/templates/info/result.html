@@ -1,0 +1,42 @@
+{% extends 'info/base.html' %}
+{% load filter_custom %}
+{% block content %}
+<form  method="post">
+{% csrf_token %}    
+<h1 style="text-align: center;">Result</h1>
+<h4 style="float: right;">Total Marks:- {{t_marks}}</h4>
+<br><br>
+{% for ob in result_list %}
+
+<h5>{{ forloop.counter }}. {{ob.Question.question_description}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% ifequal format mv %}{{marks}}{% else %}{{ma|index:forloop.counter0}}{%endifequal%}</h5>
+
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="A" id="flexCheckDefault" disabled  {% ifequal ob.answer A %}checked {%endifequal%} >
+    <label class="form-check-label" for="flexCheckDefault" {% ifequal ob.answer A %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        A. {{ob.Question.option_1}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="B"  id="flexCheckChecked" disabled {% ifequal ob.answer B %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckChecked" {% ifequal ob.answer B %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        B. {{ob.Question.option_2}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="C" id="flexCheckDefault" disabled {% ifequal ob.answer C %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckDefault" {% ifequal ob.answer C %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        C. {{ob.Question.option_3}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="D" id="flexCheckChecked" disabled {% ifequal ob.answer D %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckChecked" {% ifequal ob.answer D %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        D. {{ob.Question.option_4}}
+    </label>
+  </div>
+  
+{% endfor %}
+<h5>Your Mark:- {{s_mark}} / {{t_marks}}</h5>
+<input  class="btn btn-outline-success" type="submit" value="Download">
+</form>
+{% endblock %}

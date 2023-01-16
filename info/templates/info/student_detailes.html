@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  </head>
+  <body>
+    <h1 style="text-align: center; margin-top: 10px;">Student Fees Detailes</h1>
+    <form  method="post">
+      {% csrf_token %}
+    <h5>Total Collection:- {{total}},Collected:- {{paid}},Not Collected:-{{npaid}}, Expired:- {{epaid}}</h5>
+    <select name="sf" class="form-control-sm" aria-label="Default select example">
+      <option selected>None</option>
+      <option value="1">Success</option>
+      <option value="2">Failure</option>
+      <option value="3">Expired</option>
+    </select>
+    <select name="ad" class="form-control-sm" aria-label="Default select example">
+      <option selected>None</option>
+      <option value="1">Ascending</option>
+      <option value="2">Descending</option>
+    </select>
+    <input name="search" class="btn btn-outline-dark" type="submit" value="Search">
+    <input name="Download" class="btn btn-outline-success" type="submit" value="Download">
+    </form>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Status</th>
+              </tr>
+        </thead>
+        <tbody>
+            {% for i in stud_data %}
+            <tr {% if i.status == ch %} style="background-color: lightgreen;"{% elif i.status == 'Expired' %} style="background-color: lightseagreen;" {% else %} style="background-color: lightcoral;" {% endif %}>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{i.name}}</td>
+                <td>{{i.amount}}</td>
+                <td>{{i.status}}</td>
+              </tr>
+            {% endfor %}  
+        </tbody>
+      </table>
+      {% if stud_data.has_other_pages %}
+										
+      <ul class="pagination global pagination-radius float-right mb-xl-0 ml-3">
+        {% if stud_data.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ stud_data.previous_page_number }}"><i class="las la-angle-double-left"></i></a></li>
+        {% endif %}
+        {% for i in stud_data.paginator.page_range %}
+        {% if stud_data.number == i %}	
+          <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>	
+        {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}	
+        {% endfor %}
+        {% if stud_data.has_next %}				
+        <li class="page-item"><a class="page-link" href="?page={{ stud_data.next_page_number }}"><i class="las la-angle-double-right"></i></a></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+{% extends 'info/base.html' %}
+{% block content %}
+<h1 style="text-align: center;">Exam Detailes</h1>
+<h4>Exam Name:- {{view_data.exam_name}}</h4>
+<h4>Subject:- {{view_data.class_id}}</h4>
+<h4>Course:- {{view_data.course}}</h4>
+<h4>Date:- {{view_data.exam_date}}</h4>
+<h4>Exam Started At:- {{view_data.exam_time_start|date:'H:i A'}}</h4>
+<h4>Exam Ended At:- {{view_data.exam_time_end|date:'H:i A'}}</h4>
+
+{% if rd is True %}
+<h3 style="text-align: center;">Result Data</h3>
+{% for ob in result_data %}
+<p>{{ forloop.counter }}. {{ob.Question.question_description}}</p>
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="A" id="flexCheckDefault" disabled  {% ifequal ob.answer A %}checked {%endifequal%} >
+    <label class="form-check-label" for="flexCheckDefault" {% ifequal ob.answer A %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        A. {{ob.Question.option_1}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="B"  id="flexCheckChecked" disabled {% ifequal ob.answer B %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckChecked" {% ifequal ob.answer B %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        B. {{ob.Question.option_2}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="C" id="flexCheckDefault" disabled {% ifequal ob.answer C %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckDefault" {% ifequal ob.answer C %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        C. {{ob.Question.option_3}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="D" id="flexCheckChecked" disabled {% ifequal ob.answer D %}checked{%endifequal%}>
+    <label class="form-check-label" for="flexCheckChecked" {% ifequal ob.answer D %}{% if ob.cur_answer%}style="background-color: lightgreen;" {%else%}style="background-color: red;"{% endif %}{%endifequal%}>
+        D. {{ob.Question.option_4}}
+    </label>
+  </div>
+{% endfor %}
+{% endif %}
+
+
+
+{% if pd is True %}
+<h1 style="text-align: center;">Question Data</h1>
+{% for obj in paper_data %}
+{% for q in obj.Question.all %}
+<h5>{{ forloop.counter }}. {{q.question_description}}</h5>
+
+<div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="A" id="flexCheckDefault" disabled>
+    <label class="form-check-label" for="flexCheckDefault">
+        A. {{q.option_1}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="B"  id="flexCheckChecked" disabled>
+    <label class="form-check-label" for="flexCheckChecked">
+        B. {{q.option_2}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="C" id="flexCheckDefault" disabled>
+    <label class="form-check-label" for="flexCheckDefault">
+        C. {{q.option_3}}
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="checks" value="D" id="flexCheckChecked" disabled>
+    <label class="form-check-label" for="flexCheckChecked">
+        D. {{q.option_4}}
+    </label>
+  </div> 
+  {% endfor %}
+{% endfor %}
+{% endif %}
+{% endblock %}
